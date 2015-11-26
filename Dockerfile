@@ -32,13 +32,14 @@ RUN apt-get --yes install \
 RUN pip install tornado jinja2 pillow pycurl
 
 # Fetch motioneye src
-RUN cd /tmp && git clone https://bitbucket.org/ccrisan/motioneye.git && \
+RUN cd /tmp && git clone https://github.com/ccrisan/motioneye.git && \
     cd /tmp/motioneye && python setup.py install && mkdir /etc/motioneye && \
     cp /tmp/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf && \
     rm -rf /tmp/*
 
-VOLUME /etc/motion
+VOLUME /etc/motioneye
 VOLUME /var/run/motion
+VOLUME /var/lib/motion
 
 WORKDIR /motioneye
 CMD /usr/local/bin/meyectl startserver -c /etc/motioneye/motioneye.conf
